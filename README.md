@@ -4,11 +4,16 @@
 ## 文件结构
 
 ```
-  .
-  ├── config.conf             # 配置文件
-  ├── Configures.py           # 配置文件解析
-  ├── LocalConfig.py          # 配置文件中本地配置类
-  └── RemoteConfig.py         # 配置文件中远程配置类
+.
+├── configure
+│   ├── Configures.py
+│   ├── __init__.py
+│   ├── LocalConfig.py
+│   └── RemoteConfig.py
+├── config.conf
+├── main.py
+└── run.log
+
 ```
 
 ## 测试
@@ -16,9 +21,17 @@
 * 测试代码
 
 ```
-    print(Configures())
-    print(Configures())
-    print(configures)
+    #!/usr/bin/env python
+    # -*- coding: utf-8 -*-
+    # Copyright (c) 2016 - zengjf <zengjf42@163.com>
+    
+    from configure.Configures import *
+    
+    if __name__ == '__main__':
+    
+        print(Configures())
+        print(Configures())
+        print(configures)
 ```
 
 * 输出信息：

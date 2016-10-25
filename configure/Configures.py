@@ -2,10 +2,13 @@
 # -*- coding: utf-8 -*-
 # Copyright (c) 2016 - zengjf <zengjf42@163.com>
 
-from LocalConfig import LocalConfig
-from RemoteConfig import RemoteConfig
-
 import configparser
+
+from configure.LocalConfig import LocalConfig
+from configure.RemoteConfig import RemoteConfig
+from logging import *
+
+import logging
 
 # 初始化配置
 class Configures(object):
@@ -47,26 +50,34 @@ class Configures(object):
             # 获取移除了:号的MAC地址
             cls.macAddr = "00:11:22:33:44:55"# getMac().replace(":", "")
 
-            # 根据是否输出调试信息来决定是否输出配置信息
-            if cls.localConfig.debug :
+            # 设置log等级
+            infoLevel = logging.DEBUG
+            if not cls.localConfig.debug:
+                infoLevel = logging.ERROR
 
-                print("[Debug configure data]:")
-                print("\tlocalhost Debug: %s" % cls.localConfig.debug)
+            basicConfig(level=infoLevel,
+                format='%(asctime)s %(filename)s[line:%(lineno)d] %(levelname)s %(message)s',
+                datefmt='%a, %d %b %Y %H:%M:%S',
+                filename=config.get(localTag, "logFileName"),
+                filemode='a')
 
-                print("[Remote configure data]:")
-                print("\tremote IP: %s" % cls.remoteConfig.ip)
-                print("\tremote Port: %d" % cls.remoteConfig.port)
-                print("\tremote User: %s" % cls.remoteConfig.user)
-                print("\tremote Passwd: %s" % cls.remoteConfig.passwd)
+            debug("[Debug configure data]:")
+            debug("\tlocalhost Debug: %s" % cls.localConfig.debug)
 
-                print("[Local configure data]:")
-                print("\tlocalhost IP: %s" % cls.localConfig.ip)
-                print("\tlocalhost Port: %d" % cls.localConfig.port)
-                print("\tlocalhost User: %s" % cls.localConfig.user)
-                print("\tlocalhost Passwd: %s" % cls.localConfig.passwd)
-                print("\tlocalhost Temperature: %s" % cls.localConfig.temperature)
-                print("\tlocalhost Pressure: %s" % cls.localConfig.pressure)
-                print("\tlocalhost PM2dot5: %s" % cls.localConfig.pm2dot5)
+            debug("[Remote configure data]:")
+            debug("\tremote IP: %s" % cls.remoteConfig.ip)
+            debug("\tremote Port: %d" % cls.remoteConfig.port)
+            debug("\tremote User: %s" % cls.remoteConfig.user)
+            debug("\tremote Passwd: %s" % cls.remoteConfig.passwd)
+
+            debug("[Local configure data]:")
+            debug("\tlocalhost IP: %s" % cls.localConfig.ip)
+            debug("\tlocalhost Port: %d" % cls.localConfig.port)
+            debug("\tlocalhost User: %s" % cls.localConfig.user)
+            debug("\tlocalhost Passwd: %s" % cls.localConfig.passwd)
+            debug("\tlocalhost Temperature: %s" % cls.localConfig.temperature)
+            debug("\tlocalhost Pressure: %s" % cls.localConfig.pressure)
+            debug("\tlocalhost PM2dot5: %s" % cls.localConfig.pm2dot5)
 
         return cls._inst
 
@@ -78,6 +89,6 @@ if __name__ == '__main__':
     #     < __main__.Configures object at 0x7f7404fb3240 >
     #     < __main__.Configures object at 0x7f7404fb3240 >
     #     < __main__.Configures object at 0x7f7404fb3240 >
-    print(Configures())
-    print(Configures())
-    print(configures)
+    debug(Configures())
+    debug(Configures())
+    debug(configures)
