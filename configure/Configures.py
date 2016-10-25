@@ -55,11 +55,19 @@ class Configures(object):
             if not cls.localConfig.debug:
                 infoLevel = logging.ERROR
 
-            basicConfig(level=infoLevel,
-                format='%(asctime)s %(filename)s[line:%(lineno)d] %(levelname)s %(message)s',
-                datefmt='%a, %d %b %Y %H:%M:%S',
-                filename=config.get(localTag, "logFileName"),
-                filemode='a')
+            if not config.getboolean(localTag, "console"):
+                basicConfig(level=infoLevel,
+                    format='%(asctime)s %(filename)s[line:%(lineno)d] %(levelname)s %(message)s',
+                    datefmt='%a, %d %b %Y %H:%M:%S',
+                    filename=config.get(localTag, "logFileName"),
+                    filemode='a'
+                )
+            else:
+                basicConfig(level=infoLevel,
+                    format='%(asctime)s %(filename)s[line:%(lineno)d] %(levelname)s %(message)s',
+                    datefmt='%a, %d %b %Y %H:%M:%S',
+                )
+
 
             debug("[Debug configure data]:")
             debug("\tlocalhost Debug: %s" % cls.localConfig.debug)
